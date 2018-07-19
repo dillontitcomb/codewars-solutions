@@ -101,3 +101,24 @@ function round(num) {
   }
   return num;
 }
+
+// http://www.codewars.com/kata/54a91a4883a7de5d7800009c/train/javascript
+
+// ex: 'foobar123' --> 'foobar124'
+
+function incrementString(string) {
+  const regEx = /\d+/;
+  let numString;
+  if (regEx.test(string) === true) {
+    numString = regEx.exec(string)[0];
+  } else {
+    return string + 1;
+  }
+  const realNumArr = (parseInt(numString) + 1).toString().split('');
+  const leadingZeroes = numString.length - realNumArr.length;
+  for (let i = 0; i < leadingZeroes; i++) {
+    realNumArr.unshift(0);
+  }
+  let output = string.replace(numString, realNumArr.join(''));
+  return output;
+}
