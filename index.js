@@ -1,6 +1,7 @@
 // http://www.codewars.com/kata/59590976838112bfea0000fa/train/javascript
 
 // ex: values = [1,2,5,4,7,3,2,1,6] n (number of beggars) = 3
+
 function beggars(values, n) {
   let sumArray = [];
   for (let i = 0; i < n; i++) {
@@ -44,6 +45,7 @@ function highestRank(arr) {
 // https://www.codewars.com/kata/55c45be3b2079eccff00010f/train/javascript
 
 // ex: "is2 Thi1s T4est 3a" --> "Thi1s is2 3a T4est"
+
 function order(words) {
   const wordsArr = words.split(' ');
   let valuesArr = [];
@@ -80,4 +82,22 @@ function songDecoder(song) {
     }
   }
   return arr.join('');
+}
+
+// https://www.codewars.com/kata/51f1342c76b586046800002a/train/javascript
+
+// ex: 4.61 --> 4.5, 4.75 --> 5
+
+function round(num) {
+  let wholeNum = parseFloat(Math.round(num) - num);
+  if (wholeNum > 0.25) {
+    num = num - (0.5 - wholeNum);
+  } else if (wholeNum > 0) {
+    num = Math.round(num);
+  } else if (wholeNum >= -0.25) {
+    num = wholeNum + num;
+  } else if (wholeNum >= -0.5) {
+    num = num + 0.5 - Math.abs(wholeNum);
+  }
+  return num;
 }
