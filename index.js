@@ -150,3 +150,31 @@ function WhatIsTheTime(timeInMirror) {
   let output = `${hourString}:${minuteString}`;
   return output;
 }
+
+// https://www.codewars.com/kata/55aa075506463dac6600010d/train/javascript
+
+// list_squared(1, 250) --> [[1, 1], [42, 2500], [246, 84100]]
+
+function listSquared(m, n) {
+  let matches = [];
+  for (let i = m; i <= n; i++) {
+    let divisors = [];
+    for (let j = 0; j <= i; j++) {
+      if (i % j === 0) divisors.push(j);
+    }
+    let squareDivSum = divisors
+      .map(num => num * num)
+      .reduce((num, nextNum) => num + nextNum);
+    for (let k = 0; k <= squareDivSum; k++) {
+      if (Math.sqrt(squareDivSum) === k) {
+        matches.push([i, k * k]);
+      }
+    }
+  }
+  return matches;
+}
+
+let fromA = 1;
+let fromB = 500;
+
+console.log(listSquared(fromA, fromB));
