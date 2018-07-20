@@ -201,3 +201,66 @@ find_the_ball = function(start, swaps) {
   });
   return ball;
 };
+
+// https://www.codewars.com/kata/street-fighter-2-character-selection/train/javascript
+
+// ex: fighters = [["Ryu", "E.Honda", "Blanka", "Guile", "Balrog", "Vega"], ["Ken", "Chun Li", "Zangief", "Dhalsim", "Sagat", "M.Bison"]];
+// moves = ['up', 'left', 'right', 'left', 'left'];
+// initial position = [0,0];
+
+function streetFighterSelection(fighters, position, moves) {
+  let selections = [];
+  moves.forEach(move => {
+    console.log(move);
+    switch (move) {
+      case 'up':
+        if (position[0] - 1 >= 0) position = [position[0] - 1, position[1]];
+        break;
+      case 'left':
+        if (position[1] === 0) {
+          position[1] = 5;
+        } else if (fighters[position[0]][position[1] - 1])
+          position = [position[0], position[1] - 1];
+        break;
+      case 'right':
+        if (position[1] === 5) {
+          position[1] = 0;
+        } else if (fighters[position[0]][position[1] + 1])
+          position = [position[0], position[1] + 1];
+        break;
+      case 'down':
+        if (position[0] + 1 <= 1) position = [position[0] + 1, position[1]];
+        break;
+    }
+    selections.push(fighters[position[0]][position[1]]);
+  });
+  return selections;
+}
+
+// https://www.codewars.com/kata/55f4e56315a375c1ed000159/train/javascript
+
+// ex: powerSumDigTerm(2) --> 512 (5+1+2 = 8, 8^3 = 512)
+
+// use Math.pow(number, 1/power) to find sqrts
+
+function powerSumDigTerm(n) {
+  let matches = [];
+  let index = 0;
+  while (matches.length < n) {
+    let digitSum = sumDigits(index);
+    index++;
+  }
+  return matches;
+}
+
+function sumDigits(num) {
+  let sum = num
+    .toString()
+    .split('')
+    .reduce((firstVal, nextVal) => {
+      return parseInt(firstVal) + parseInt(nextVal);
+    });
+  return sum;
+}
+
+console.log(powerSumDigTerm(5));
