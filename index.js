@@ -122,3 +122,31 @@ function incrementString(string) {
   let output = string.replace(numString, realNumArr.join(''));
   return output;
 }
+
+// https://www.codewars.com/kata/56548dad6dae7b8756000037/train/javascript
+
+// ex: 9:00 --> 3:00
+
+function WhatIsTheTime(timeInMirror) {
+  const clockHands = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  let hours = timeInMirror.split(':')[0];
+  let minutes = timeInMirror.split(':')[1];
+  let timeIndex = clockHands.indexOf(parseInt(hours));
+  let mirrorHours = clockHands[11 - timeIndex];
+  let mirrorMinutes = minutes > 0 ? 60 - minutes : 0;
+  if (mirrorMinutes === 0) mirrorHours += 1;
+  let hourString;
+  let minuteString;
+  if (mirrorHours < 10) {
+    hourString = '0' + mirrorHours;
+  } else {
+    hourString = mirrorHours.toString();
+  }
+  if (mirrorMinutes < 10) {
+    minuteString = '0' + mirrorMinutes;
+  } else {
+    minuteString = mirrorMinutes.toString();
+  }
+  let output = `${hourString}:${minuteString}`;
+  return output;
+}
