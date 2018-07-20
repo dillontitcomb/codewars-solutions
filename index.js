@@ -156,25 +156,48 @@ function WhatIsTheTime(timeInMirror) {
 // list_squared(1, 250) --> [[1, 1], [42, 2500], [246, 84100]]
 
 function listSquared(m, n) {
+  let nums = [];
   let matches = [];
-  for (let i = m; i <= n; i++) {
-    let divisors = [];
-    for (let j = 0; j <= i; j++) {
-      if (i % j === 0) divisors.push(j);
-    }
-    let squareDivSum = divisors
-      .map(num => num * num)
-      .reduce((num, nextNum) => num + nextNum);
-    for (let k = 0; k <= squareDivSum; k++) {
-      if (Math.sqrt(squareDivSum) === k) {
-        matches.push([i, k * k]);
+  let sums = [];
+  while (m < n) {
+    nums.push(m);
+    let i = 0;
+    let sum = 0;
+    while (i <= m) {
+      if (m % i === 0) {
+        sum += i * i;
       }
+      i++;
     }
+    sums.push(sum);
+    m++;
+  }
+  let k = 0;
+  while (k < sums.length) {
+    let temp = [];
+    let sqrt = Math.round(Math.sqrt(sums[k]));
+    if (sqrt * sqrt === sums[k]) {
+      temp.push(nums[k]);
+      temp.push(sums[k]);
+      matches.push(temp);
+    }
+    k++;
   }
   return matches;
 }
 
-let fromA = 1;
-let fromB = 500;
+// https://www.codewars.com/kata/546a3fea8a3502302a000cd2/train/javascript
 
-console.log(listSquared(fromA, fromB));
+// ex: swaps = [[0,1], [1,2], [1, 0]] --> find_the_ball(0, swaps) == 2
+
+find_the_ball = function(start, swaps) {
+  let ball = start;
+  swaps.forEach(move => {
+    if (move[0] === ball) {
+      ball = move[1];
+    } else if (move[1] === ball) {
+      ball = move[0];
+    }
+  });
+  return ball;
+};
