@@ -245,11 +245,12 @@ function streetFighterSelection(fighters, position, moves) {
 
 function powerSumDigTerm(n) {
   let matches = [];
-  let index = 0;
-  while (matches.length < n) {
-    let digitSum = sumDigits(index);
-    index++;
-  }
+  let squares = getSquares(1000);
+  squares.forEach(square => {
+    if (sumDigits(square) === Math.sqrt(square)) {
+      matches.push(square);
+    }
+  });
   return matches;
 }
 
@@ -263,4 +264,156 @@ function sumDigits(num) {
   return sum;
 }
 
-console.log(powerSumDigTerm(5));
+function getPowersUpToNum(num) {
+  let powers = {};
+  let multiple = 0;
+  let index = 0;
+  while (multiple < num) {
+    for (let i = 2; i < 10; i++) {
+      multiple = Math.pow(index, i);
+      if (multiple > num) break;
+      if (!powers[index]) powers[index] = multiple;
+    }
+    index++;
+  }
+  return powers;
+}
+
+function getSquares(num) {
+  let squares = [];
+  let multiple = 0;
+  let index = 0;
+  while (multiple < num) {
+    multiple = index * index;
+    squares.push(multiple);
+    index++;
+  }
+  return squares;
+}
+
+// http://www.codewars.com/kata/58b38256e51f1c2af0000081/train/javascript
+
+// find index of best match from Zamalek perspective (lowest goal differential if loss - if equal, most goals scored)
+// both inputs are equal size arrays
+
+function bestMatch(ALAHLYGoals, zamalekGoals) {
+  let bestGameIndex = 0;
+  let goalDifferential = ALAHLYGoals[0] - zamalekGoals[0];
+  let goalsScored = zamalekGoals[0];
+  for (let i = 1; i < ALAHLYGoals.length; i++) {
+    let tempDifferential = ALAHLYGoals[i] - zamalekGoals[i];
+    let tempGoalsScored = zamalekGoals[i];
+    if (tempDifferential < goalDifferential) {
+      goalDifferential = tempDifferential;
+      goalsScored = tempGoalsScored;
+      bestGameIndex = i;
+    } else if (
+      tempDifferential === goalDifferential &&
+      tempGoalsScored > goalsScored
+    ) {
+      goalDifferential = tempDifferential;
+      goalsScored = tempGoalsScored;
+      bestGameIndex = i;
+    }
+  }
+  return bestGameIndex;
+}
+
+// https://www.codewars.com/kata/54d4c8b08776e4ad92000835/train/javascript
+
+// Find perfect powers
+
+var isPP = function(n) {
+  for (let i = 0; i < n; i++) {
+    if (i * i === n) {
+      return [i, 2];
+    }
+  }
+  return null;
+};
+
+// https://www.codewars.com/kata/mergesort-merge-function/train/javascript
+
+// combine two sorted arrays
+
+// e.g. [1,2,3,4,5], [6,7,8,9]
+
+const waterDataArray = [
+  3.00722e12,
+  7374550,
+  7374540,
+  7374525,
+  7374510,
+  7374370,
+  7374000,
+  7295100,
+  7294800,
+  7290880,
+  7289000,
+  7265455,
+  7032000,
+  7024175,
+  7022000,
+  7020850,
+  7020500,
+  7010000,
+  5587498,
+  5587450,
+  5501600,
+  5474500,
+  5420500,
+  5420400,
+  5416100,
+  5411500,
+  5389500,
+  5386400,
+  5378500,
+  5378490,
+  5355341,
+  5355250,
+  5355235,
+  5344500,
+  5331580,
+  5331000,
+  5288670,
+  5288500,
+  5283500,
+  5270700,
+  5267000,
+  5261000,
+  5242300,
+  5227530,
+  5227500,
+  5211000,
+  5210000,
+  5207600,
+  5200510
+];
+
+// http://www.codewars.com/kata/573992c724fc289553000e95/train/javascript
+// Find smallest digit in a number, then place that digit elsewhere in the number
+// to create a new number that is as small as possible
+function smallest(n) {
+  let digitArray = n.toString().split('');
+  let tempSmallest = digitArray[1] || -1;
+  let tempSmallestIndex = 1 || -1;
+  for (let i = 0; i < digitArray.length; i++) {
+    if (digitArray[i] < tempSmallest) {
+      if (i == 0) {
+        // do nothing (we don't want to move the smallest digit if it's in position 0)
+      } else {
+        tempSmallest = digitArray[i];
+        tempSmallestIndex = i;
+      }
+    }
+  }
+  for (let i = 0; i < digitArray.length; i++) {
+    if (tempSmallest < digitArray[i]) {
+      digitArray.splice(tempSmallestIndex, 1);
+      digitArray.splice(i, 0, tempSmallest);
+      return [parseInt(digitArray.join('')), parseInt(tempSmallestIndex), i];
+    }
+  }
+}
+
+// console.log(smallest(209911312037));
