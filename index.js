@@ -393,6 +393,8 @@ const waterDataArray = [
 // http://www.codewars.com/kata/573992c724fc289553000e95/train/javascript
 // Find smallest digit in a number, then place that digit elsewhere in the number
 // to create a new number that is as small as possible
+// TODO change output parameters to meet kata reqs
+
 function smallest(n) {
   let digitArray = n.toString().split('');
   let tempSmallest = digitArray[1] || -1;
@@ -417,3 +419,52 @@ function smallest(n) {
 }
 
 // console.log(smallest(209911312037));
+
+// http://www.codewars.com/kata/5508249a98b3234f420000fb/train/javascript
+// Variation on Caesar Cipher
+// TODO group into 5 strings
+const alphabet =
+  'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
+
+function movingShift(s, shift) {
+  const arr = s.split('');
+  for (let i = 0; i < arr.length; i++) {
+    let letter = arr[i].toLowerCase();
+    let letterPosition = alphabet.indexOf(letter);
+    let capitalized = letter === arr[i] ? false : true;
+    if (arr[i] == ' ' || arr[i] == '!') {
+      //do nothing
+    } else {
+      arr[i] = alphabet[letterPosition + i + 1];
+      if (capitalized) arr[i] = arr[i].toUpperCase();
+    }
+  }
+  return arr.join('');
+}
+
+function demovingShift(array, shift) {
+  const arr = array.join('').split('');
+  for (let i = 0; i < arr.length; i++) {
+    let letter = arr[i].toLowerCase();
+    let letterPosition = alphabet.lastIndexOf(letter);
+    let capitalized = letter === arr[i] ? false : true;
+    if (arr[i] == ' ' || arr[i] == '!') {
+      //do nothing
+    } else {
+      arr[i] = alphabet[letterPosition - i - 1];
+      if (capitalized) arr[i] = arr[i].toUpperCase();
+    }
+  }
+  return arr.join('');
+}
+
+var u = 'I should have known that you would have a perfect answer for me!!!';
+var v = [
+  'J vltasl rlhr ',
+  'zdfog odxr ypw',
+  ' atasl rlhr p ',
+  'gwkzzyq zntyhv',
+  ' lvz wp!!!'
+];
+console.log(movingShift(u, 1));
+console.log(demovingShift(v, 1));
