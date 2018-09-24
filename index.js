@@ -466,5 +466,76 @@ var v = [
   'gwkzzyq zntyhv',
   ' lvz wp!!!'
 ];
-console.log(movingShift(u, 1));
-console.log(demovingShift(v, 1));
+// console.log(movingShift(u, 1));
+// console.log(demovingShift(v, 1));
+
+// http://www.codewars.com/kata/52ebe4608567ade7d700044a/train/javascript
+// poker card encoder/decoder
+// Number to str: get suit from num, subtract as needed, then lookup value in obj
+
+const cards = {
+  0: 'A',
+  1: '2',
+  2: '3',
+  3: '4',
+  4: '5',
+  5: '6',
+  6: '7',
+  7: '8',
+  8: '9',
+  9: 'T',
+  10: 'J',
+  11: 'Q',
+  12: 'K'
+};
+
+function cardsConverter(input) {
+  if (input === undefined) return null;
+  let type;
+  isNaN(input[0]) ? (type = 'str') : (type = 'num');
+  if (type == 'num')
+    input = input.sort((a, b) => {
+      return a - b;
+    });
+  function toStr(num) {
+    let suit;
+    if (num > 38) {
+      suit = 's';
+      num = cards[num - 39];
+    } else if (num > 25) {
+      suit = 'h';
+      num = cards[num - 26];
+    } else if (num > 12) {
+      suit = 'd';
+      num = cards[num - 13];
+    } else {
+      suit = 'c';
+      num += 1;
+    }
+    return num + suit;
+  }
+  function toNum(str) {
+    let num = parseInt(Object.keys(cards).find(key => cards[key] === str[0]));
+    let suit = str[1];
+    if (suit === 's') {
+      return num + 39;
+    } else if (suit === 'h') {
+      return num + 26;
+    } else if (suit === 'd') {
+      return num + 13;
+    } else {
+      return num;
+    }
+  }
+  let output;
+  type === 'str'
+    ? (output = input.map(x => toNum(x)).sort((a, b) => {
+        return a - b;
+      }))
+    : (output = input.map(x => toStr(x)));
+  return output;
+}
+
+// console.log(cardsConverter([]));
+// console.log(cardsConverter([3, 6, 7, 13, 14]));
+// console.log(cardsConverter(['7s', 'Ah', '5h', 'Qc', 'Qs']));
