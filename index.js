@@ -539,3 +539,44 @@ function cardsConverter(input) {
 // console.log(cardsConverter([]));
 // console.log(cardsConverter([3, 6, 7, 13, 14]));
 // console.log(cardsConverter(['7s', 'Ah', '5h', 'Qc', 'Qs']));
+
+// https://www.codewars.com/kata/58298e19c983caf4ba000c8d/train/javascript
+
+function minUmbrellas(weather) {
+  let homeUmbrellas = 0;
+  let workUmbrellas = 0;
+  function convertWeather(condition) {
+    if (condition == 'rainy' || condition == 'thunderstorms') {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  let convertedArr = weather.map(state => convertWeather(state));
+  for (let i = 0; i < convertedArr.length; i += 2) {
+    if (convertedArr[i] === 0 && convertedArr[i+1] === 0) {
+      // do nothing
+    } else if (convertedArr[i] === 1 && convertedArr[i+1] === 0) {
+      if (homeUmbrellas === 0) {
+        workUmbrellas += 1;
+      } else {
+        homeUmbrellas -= 1;
+        workUmbrellas += 1;
+      }
+    } else if (convertedArr[i] === 0 && convertedArr[i+1] === 1) {
+      if (workUmbrellas === 0) {
+        homeUmbrellas += 1;
+      } else {
+        homeUmbrellas += 1;
+        workUmbrellas -= 1;
+      }
+    } else if (convertedArr[i] === 1 && convertedArr[i+1] === 1) {
+      if (homeUmbrellas === 0) homeUmbrellas += 1;
+    }
+  }
+  return homeUmbrellas + workUmbrellas;
+}
+
+const w = ['overcast', 'rainy', 'clear', 'thunderstorms'];
+
+console.log(minUmbrellas(w));
