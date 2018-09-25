@@ -390,10 +390,11 @@ const waterDataArray = [
   5200510
 ];
 
+TODO:
 // http://www.codewars.com/kata/573992c724fc289553000e95/train/javascript
 // Find smallest digit in a number, then place that digit elsewhere in the number
 // to create a new number that is as small as possible
-// TODO change output parameters to meet kata reqs
+
 
 function smallest(n) {
   let digitArray = n.toString().split('');
@@ -420,9 +421,10 @@ function smallest(n) {
 
 // console.log(smallest(209911312037));
 
+TODO:
 // http://www.codewars.com/kata/5508249a98b3234f420000fb/train/javascript
 // Variation on Caesar Cipher
-// TODO group into 5 strings
+
 const alphabet =
   'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
 
@@ -469,6 +471,7 @@ var v = [
 // console.log(movingShift(u, 1));
 // console.log(demovingShift(v, 1));
 
+TODO:
 // http://www.codewars.com/kata/52ebe4608567ade7d700044a/train/javascript
 // poker card encoder/decoder
 // Number to str: get suit from num, subtract as needed, then lookup value in obj
@@ -554,23 +557,23 @@ function minUmbrellas(weather) {
   }
   let convertedArr = weather.map(state => convertWeather(state));
   for (let i = 0; i < convertedArr.length; i += 2) {
-    if (convertedArr[i] === 0 && convertedArr[i+1] === 0) {
+    if (convertedArr[i] === 0 && convertedArr[i + 1] === 0) {
       // do nothing
-    } else if (convertedArr[i] === 1 && convertedArr[i+1] === 0) {
+    } else if (convertedArr[i] === 1 && convertedArr[i + 1] === 0) {
       if (homeUmbrellas === 0) {
         workUmbrellas += 1;
       } else {
         homeUmbrellas -= 1;
         workUmbrellas += 1;
       }
-    } else if (convertedArr[i] === 0 && convertedArr[i+1] === 1) {
+    } else if (convertedArr[i] === 0 && convertedArr[i + 1] === 1) {
       if (workUmbrellas === 0) {
         homeUmbrellas += 1;
       } else {
         homeUmbrellas += 1;
         workUmbrellas -= 1;
       }
-    } else if (convertedArr[i] === 1 && convertedArr[i+1] === 1) {
+    } else if (convertedArr[i] === 1 && convertedArr[i + 1] === 1) {
       if (homeUmbrellas === 0) homeUmbrellas += 1;
     }
   }
@@ -579,4 +582,102 @@ function minUmbrellas(weather) {
 
 const w = ['overcast', 'rainy', 'clear', 'thunderstorms'];
 
-console.log(minUmbrellas(w));
+// console.log(minUmbrellas(w));
+
+TODO:
+// Numbers to words
+// ALMOST WORKS
+// https://www.codewars.com/kata/52724507b149fa120600031d/train/javascript
+
+const lookupOnes = {
+  0: 'zero',
+  1: 'one',
+  2: 'two',
+  3: 'three',
+  4: 'four',
+  5: 'five',
+  6: 'six',
+  7: 'seven',
+  8: 'eight',
+  9: 'nine'
+};
+const lookupTeens = {
+  10: 'ten',
+  11: 'eleven',
+  12: 'twelve',
+  13: 'thirteen',
+  14: 'fourteen',
+  15: 'fifteen',
+  16: 'sixteen',
+  17: 'seventeen',
+  18: 'eighteen',
+  19: 'nineteen'
+};
+
+const lookupTens = {
+  2: 'twenty',
+  3: 'thirty',
+  4: 'forty',
+  5: 'fifty',
+  6: 'sixty',
+  7: 'seventy',
+  8: 'eighty',
+  9: 'ninety'
+};
+
+const scales = [
+  'thousand',
+  'million',
+  'billion',
+  'trillion',
+  'quadrillion',
+  'quintillion',
+  'sextillion',
+  'septillion'
+];
+
+function number2words(n) {
+  let digArr = n.toString().split('');
+  let thirdsArr = [];
+  let prefix;
+  for (let i = digArr.length - 1; i >= 0; i -= 3) {
+    if (i === 1) {
+      prefix = '0' + digArr[i - 1] + digArr[i];
+    } else if (i === 0) {
+      prefix = '00' + digArr[i];
+    } else {
+      thirdsArr.unshift(digArr.slice(i - 2, i + 1).join(''));
+    }
+  }
+  if (prefix > 0) thirdsArr.unshift(prefix);
+  function thirdsConverter(trip) {
+    let numString = '';
+    if (trip[0] !== '0') {
+      numString = lookupOnes[trip[0]] + ' hundred ';
+    }
+    if (trip[1] === '1') {
+      numString += lookupTeens[trip[1] + trip[2]];
+      return numString;
+    } else if (trip[1] !== '1') {
+      numString += lookupTens[trip[1]];
+    }
+    if (trip[2] !== '0') {
+      if (trip[1] !== '0') {
+        numString += '-' + lookupOnes[trip[2]];
+      } else {
+        numString += lookupOnes[trip[2]];
+      }
+    }
+    return numString;
+  }
+  let convertedTrips = thirdsArr.map(third => thirdsConverter(third));
+  let count = 0;
+  for (let i = convertedTrips.length - 1; i >= 0; i--) {
+    if (convertedTrips[i - 1] && convertedTrips[i - 1] !== '000')
+      convertedTrips[i] = ' ' + scales[count] + ' ' + convertedTrips[i];
+    count += 1;
+  }
+  return convertedTrips.join('');
+}
+
+// console.log(number2words(134000155));
